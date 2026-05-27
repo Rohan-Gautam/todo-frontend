@@ -3,6 +3,9 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import DashboardPage from "./pages/DashboardPage.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import ProfilePage from "./pages/ProfilePage.tsx";
+import BuyMeCoffee from "./pages/BuyMeCoffee.tsx";
+import Success from "./pages/Success.tsx";
 
 function HomePage() {
 
@@ -39,6 +42,9 @@ function App() {
             {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
                 <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/buy-me-a-coffee" element={<BuyMeCoffee />} />
+                <Route path="/success" element={<Success/>} />
             </Route>
 
         </Routes>
