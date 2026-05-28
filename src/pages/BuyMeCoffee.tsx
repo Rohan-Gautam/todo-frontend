@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { Coffee, Heart, Sparkles, Star } from "lucide-react";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar"; // <-- Imported header
-import Footer from "../components/Footer"; // <-- Imported footer
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const BuyMeCoffee: React.FC = () => {
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ const BuyMeCoffee: React.FC = () => {
     const [customAmount, setCustomAmount] = useState<string>("50");
     const [loading, setLoading] = useState<boolean>(false);
 
-    // User name for Navbar
+    // Username for Navbar
     const [displayName] = useState(localStorage.getItem("name") ?? "User");
     const pricePerCoffee = 50;
 
@@ -68,6 +68,7 @@ const BuyMeCoffee: React.FC = () => {
 
         try {
             const orderResponse = await api.post(`/buy-me-a-coffee/create-order?amount=${amount}`);
+            // Fix ESLint: Explicitly check the type of orderResponse.data without 'any'
             const orderData = typeof orderResponse.data === 'string' ? JSON.parse(orderResponse.data) : orderResponse.data;
             const keyResponse = await api.post("/buy-me-a-coffee/get-key");
             const razorpayKey = keyResponse.data;
@@ -80,7 +81,8 @@ const BuyMeCoffee: React.FC = () => {
                 description: `Fueling the code with ₹${amount}`,
                 image: "https://cdn-icons-png.flaticon.com/512/3061/3061341.png",
                 order_id: orderData.id,
-                handler: async function (response: any) {
+                // Fix ESLint: Removed 'any' type definition and unused parameter
+                handler: async function (response: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string; }) {
                     try {
                         const verify = await api.post("/buy-me-a-coffee/payment-callback", null, {
                             params: {
@@ -92,7 +94,7 @@ const BuyMeCoffee: React.FC = () => {
                         if (verify.data === "Success") {
                             navigate(`/success?orderId=${response.razorpay_order_id}`);
                         }
-                    } catch (error) {
+                    } catch { // Fix ESLint: Removed unused 'error' variable
                         alert("Payment verification failed.");
                     }
                 },
@@ -100,10 +102,10 @@ const BuyMeCoffee: React.FC = () => {
                 theme: { color: "#8B5A2B" },
             };
 
-            const paymentObject = new (window as any).Razorpay(options);
+            // Fix ESLint: Replaced 'any' with a generic unknown type cast to access Razorpay
+            const paymentObject = new (window as unknown as { Razorpay: new (options: unknown) => { open: () => void } }).Razorpay(options);
             paymentObject.open();
-        } catch (error) {
-            console.error("Payment initialization failed:", error);
+        } catch { // Fix ESLint: Removed unused 'error' variable
             alert("Something went wrong. Please try again.");
         } finally {
             setLoading(false);
@@ -121,7 +123,7 @@ const BuyMeCoffee: React.FC = () => {
         <div
             className="min-h-screen flex flex-col font-['Kalam',_cursive] text-slate-800 bg-[#fcfbf9] bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] bg-[size:1.5rem_1.5rem]"
         >
-            {/* Header (Preserving local storage handle logically) */}
+            {/* Header */}
             <Navbar name={displayName} />
 
             {/* Main Interactive Parallax Container - Centered within flex-grow */}
@@ -136,7 +138,7 @@ const BuyMeCoffee: React.FC = () => {
                     <div
                         key={idx}
                         className="absolute pointer-events-none flex flex-col items-center justify-center transform group hover:scale-110 transition-transform"
-                        style={{ ...pos, zIndex: 0 }}
+                        style={{ top: pos.top, left: pos.left, transform: `rotate(${pos.rotate}deg)`, zIndex: 0 }}
                     >
                         {/* Animated Rising Fume lines */}
                         <div className="flex gap-1 mb-1">
@@ -209,7 +211,7 @@ const BuyMeCoffee: React.FC = () => {
                     style={{ perspective: 1200 }}
                     className="relative z-10 w-full max-w-md p-6 flex justify-center"
                 >
-                    {/* The Sketched Polaroid Support Card (With favorited middle animation preserved) */}
+                    {/* The Sketched Polaroid Support Card */}
                     <motion.div
                         style={{
                             rotateX,
@@ -219,14 +221,13 @@ const BuyMeCoffee: React.FC = () => {
                         initial={{ opacity: 0, y: 50, rotate: -2 }}
                         animate={{ opacity: 1, y: 0, rotate: -2 }}
                         transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-                        // Brutalist notebook cover style
                         className="bg-[#fff9ed] border-4 border-slate-800 p-8 pt-12 rounded-xl shadow-[16px_16px_0_#1e293b] w-full text-center flex flex-col items-center relative"
                     >
-                        {/* Washi Tape (Pink and Lighter Amber) holding the card down */}
+                        {/* Washi Tape */}
                         <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-28 h-8 bg-rose-300/80 border border-slate-800/20 backdrop-blur-sm transform rotate-3 shadow-sm z-10"></div>
                         <div className="absolute -top-3 left-[40%] -translate-x-1/2 w-16 h-8 bg-amber-200/80 border border-slate-800/20 backdrop-blur-sm transform -rotate-6 shadow-sm z-20"></div>
 
-                        {/* Animated Coffee Mug with Smoke (Middle card animation explicitly preserved) */}
+                        {/* Animated Coffee Mug with Smoke */}
                         <motion.div
                             style={{ translateZ: 80 }}
                             className="relative mb-6 flex flex-col items-center justify-center"
@@ -305,7 +306,7 @@ const BuyMeCoffee: React.FC = () => {
                             />
                         </motion.div>
 
-                        {/* Sketched CTA Button (Logic and appearance preserved, just updated to theme colors) */}
+                        {/* Sketched CTA Button */}
                         <motion.button
                             style={{ translateZ: 70 }}
                             whileHover={{ scale: 1.02 }}
@@ -330,12 +331,11 @@ const BuyMeCoffee: React.FC = () => {
                 </motion.div>
             </div>
 
-            {/* Footer with white background to end the grid nicely */}
-            <div className="flex flex-col justify-start w-full bg-white border-t-4 border-slate-800">
+            {/* Footer */}
+            <div className="flex flex-col justify-start w-full bg-white border-t-4 border-slate-800 z-20">
                 <Footer />
             </div>
 
-            {/* Required for the button shimmer effect */}
             <style>{`
                 @keyframes shimmer {
                     100% { transform: translateX(100%); }
