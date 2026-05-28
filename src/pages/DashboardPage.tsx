@@ -15,31 +15,26 @@ function DashboardPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
-    // --- Pagination & Sync State ---
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-    // --- Filter & Search States ---
     const [searchTerm, setSearchTerm] = useState("");
     const [filterCompleted, setFilterCompleted] = useState("all");
     const [filterPriority, setFilterPriority] = useState("ALL");
 
-    // --- Modal States for New Task ---
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newTitle, setNewTitle] = useState("");
     const [newDescription, setNewDescription] = useState("");
     const [newPriority, setNewPriority] = useState("MODERATE");
     const [creating, setCreating] = useState(false);
 
-    // --- Modal States for Editing Task ---
     const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
     const [editTitle, setEditTitle] = useState("");
     const [editDescription, setEditDescription] = useState("");
     const [editPriority, setEditPriority] = useState("MODERATE");
     const [editing, setEditing] = useState(false);
 
-    // --- Fetch Data ---
     useEffect(() => {
         const fetchTodos = async () => {
             setLoading(true);
@@ -71,7 +66,6 @@ function DashboardPage() {
         return () => clearTimeout(delayDebounceFn);
     }, [searchTerm, filterCompleted, filterPriority, currentPage, refreshTrigger]);
 
-    // --- Actions ---
     async function handleCreate() {
         if (!newTitle.trim()) return;
         setCreating(true);
@@ -160,27 +154,25 @@ function DashboardPage() {
     const isAnyModalOpen = isModalOpen || !!editingTodo;
 
     return (
-        // Root container is now white so any extra monitor space blends with the footer
-        <div className="min-h-screen flex flex-col bg-white">
+        // Math Notebook Grid Background + Kalam Font globally applied!
+        <div className="min-h-screen flex flex-col font-['Kalam',_cursive] text-slate-800 bg-[#fcfbf9] bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] bg-[size:1.5rem_1.5rem]">
 
-            {/* The grey content area hugging the tasks tightly */}
-            <div className="bg-gray-100">
+            <div className="flex-grow">
                 <Navbar name={name} />
 
-                {/* Removed flex-grow and reduced bottom padding to bring footer up */}
                 <div className={`max-w-3xl mx-auto w-full mt-10 px-4 pb-12 transition-all duration-300 ${isAnyModalOpen ? "blur-sm" : ""}`}>
 
-                    {/* ── Search & Filter Bar ───────────────────────────── */}
-                    <div className="bg-white p-4 rounded-xl shadow-sm mb-6 flex flex-col md:flex-row gap-4 border border-gray-200">
+                    {/* ── Sketched Search Bar ───────────────────────────── */}
+                    <div className="bg-white p-4 rounded-lg shadow-[6px_6px_0_#1e293b] mb-10 flex flex-col md:flex-row gap-4 border-4 border-slate-800">
                         <input
                             type="text"
-                            placeholder="Search tasks..."
+                            placeholder="Find a note..."
                             value={searchTerm}
                             onChange={(e) => {
                                 setSearchTerm(e.target.value);
                                 setCurrentPage(0);
                             }}
-                            className="flex-1 px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+                            className="flex-1 px-4 py-2 bg-amber-50 border-2 border-slate-800 rounded-md focus:outline-none focus:bg-white text-xl placeholder:text-slate-400 font-bold"
                         />
                         <div className="flex gap-4">
                             <select
@@ -189,11 +181,11 @@ function DashboardPage() {
                                     setFilterCompleted(e.target.value);
                                     setCurrentPage(0);
                                 }}
-                                className="px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                                className="px-4 py-2 bg-amber-50 border-2 border-slate-800 rounded-md focus:outline-none cursor-pointer font-bold text-lg"
                             >
-                                <option value="all">All Status</option>
-                                <option value="false">Pending</option>
-                                <option value="true">Completed</option>
+                                <option value="all">All Notes</option>
+                                <option value="false">Working On</option>
+                                <option value="true">Finished</option>
                             </select>
 
                             <select
@@ -202,9 +194,9 @@ function DashboardPage() {
                                     setFilterPriority(e.target.value);
                                     setCurrentPage(0);
                                 }}
-                                className="px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                                className="px-4 py-2 bg-amber-50 border-2 border-slate-800 rounded-md focus:outline-none cursor-pointer font-bold text-lg"
                             >
-                                <option value="ALL">All Priorities</option>
+                                <option value="ALL">All Levels</option>
                                 <option value="URGENT">Urgent</option>
                                 <option value="HIGH">High</option>
                                 <option value="MODERATE">Moderate</option>
@@ -213,22 +205,21 @@ function DashboardPage() {
                         </div>
                     </div>
 
-                    {/* ── Soft Loading Container ───────────────────────────── */}
-                    {/* Reduced min-h so it doesn't create artificial gaps on short lists */}
+                    {/* ── Sticky Notes Container ───────────────────────────── */}
                     <div className="relative min-h-[150px]">
-                        {error && <p className="text-center text-red-500 pb-4">{error}</p>}
+                        {error && <p className="text-center text-red-600 font-bold text-2xl pb-4 bg-red-100 border-2 border-slate-800 inline-block px-4 py-2 rotate-2 shadow-[4px_4px_0_#1e293b]">{error}</p>}
 
                         {loading && todos.length === 0 && !error && (
                             <div className="absolute inset-0 flex justify-center py-10">
-                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                                <span className="text-3xl font-bold animate-pulse">Drawing notes... ✍️</span>
                             </div>
                         )}
 
-                        <div className={`transition-opacity duration-300 ${loading && todos.length > 0 ? "opacity-40 pointer-events-none" : "opacity-100"}`}>
+                        <div className={`transition-opacity duration-300 ${loading && todos.length > 0 ? "opacity-50 pointer-events-none" : "opacity-100"}`}>
                             {!loading && todos.length === 0 && !error && (
-                                <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-gray-300">
-                                    <p className="text-gray-400 font-medium mb-2">No tasks found in this view.</p>
-                                    <p className="text-gray-400 text-sm">Adjust your filters or click the '+' button to add one.</p>
+                                <div className="text-center py-16 bg-white border-4 border-slate-800 border-dashed rounded-lg shadow-[8px_8px_0_#1e293b] transform rotate-1">
+                                    <p className="text-slate-800 font-bold text-3xl mb-2">Blank Page! 📄</p>
+                                    <p className="text-slate-600 text-xl font-medium">Scribble a new note to get started.</p>
                                 </div>
                             )}
 
@@ -244,34 +235,30 @@ function DashboardPage() {
                         </div>
                     </div>
 
-                    {/* ── Pagination UI ───────────────────────────── */}
-                    {!loading && (
-                        <div className="flex justify-center items-center gap-6 mt-8">
+                    {/* ── Sketched Pagination ───────────────────────────── */}
+                    {!loading && totalPages > 0 && (
+                        <div className="flex justify-center items-center gap-6 mt-12">
                             <button
                                 onClick={() => setCurrentPage((prev) => Math.max(0, prev - 1))}
                                 disabled={currentPage === 0}
-                                className={`px-5 py-2.5 bg-white border border-gray-200 rounded-xl font-bold transition-all shadow-sm ${
-                                    currentPage === 0
-                                        ? "text-gray-300 cursor-not-allowed"
-                                        : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 active:scale-95"
+                                className={`px-6 py-2 bg-white border-4 border-slate-800 rounded-md font-bold text-xl shadow-[4px_4px_0_#1e293b] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all ${
+                                    currentPage === 0 ? "opacity-50 cursor-not-allowed" : "hover:bg-amber-100"
                                 }`}
                             >
-                                &larr; Prev
+                                &larr; Back
                             </button>
 
-                            <div className="flex items-center gap-2">
-                                <span className="text-sm font-semibold text-gray-600 bg-white border border-gray-200 px-4 py-2.5 rounded-lg shadow-sm">
-                                    Page <span className="text-blue-600">{currentPage + 1}</span> of {totalPages}
+                            <div className="flex items-center">
+                                <span className="text-xl font-bold text-slate-800 bg-white border-4 border-slate-800 px-5 py-2 rounded-md shadow-[4px_4px_0_#1e293b] transform -rotate-1">
+                                    Pg <span className="text-blue-600 underline decoration-wavy decoration-2 underline-offset-4">{currentPage + 1}</span> of {totalPages}
                                 </span>
                             </div>
 
                             <button
                                 onClick={() => setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1))}
                                 disabled={currentPage >= totalPages - 1}
-                                className={`px-5 py-2.5 bg-white border border-gray-200 rounded-xl font-bold transition-all shadow-sm ${
-                                    currentPage >= totalPages - 1
-                                        ? "text-gray-300 cursor-not-allowed"
-                                        : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 active:scale-95"
+                                className={`px-6 py-2 bg-white border-4 border-slate-800 rounded-md font-bold text-xl shadow-[4px_4px_0_#1e293b] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all ${
+                                    currentPage >= totalPages - 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-amber-100"
                                 }`}
                             >
                                 Next &rarr;
@@ -281,43 +268,34 @@ function DashboardPage() {
                 </div>
             </div>
 
-            {/* The white footer area flex-grows to consume any remaining monitor space */}
-            <div className="flex-grow flex flex-col justify-start bg-white">
+            {/* Footer with white background to end the grid nicely */}
+            <div className="flex flex-col justify-start w-full bg-white border-t-4 border-slate-800">
                 <Footer />
             </div>
 
-            {/* ── Fixed bottom-right buttons ───────────────────────────── */}
-            <div className="fixed bottom-8 right-8 flex flex-col items-end gap-3 z-30">
+            {/* ── Floating Sketched Buttons ───────────────────────────── */}
+            <div className="fixed bottom-8 right-8 flex flex-col items-end gap-6 z-30">
                 <div className="relative flex items-center group">
-                    <span className="absolute right-full mr-4 bg-amber-500 text-white text-sm font-bold px-4 py-2 rounded-xl shadow-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 group-hover:-translate-x-1 transition-all duration-300">
-                        Buy me a coffee ☕
+                    <span className="absolute right-full mr-4 bg-white border-2 border-slate-800 text-slate-800 text-lg font-bold px-4 py-2 rounded-md shadow-[4px_4px_0_#1e293b] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all -rotate-2">
+                        Fuel the dev ☕
                     </span>
                     <button
                         onClick={() => navigate("/buy-me-a-coffee")}
-                        className="bg-gradient-to-br from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-amber-500/30 hover:scale-105 flex items-center justify-center transition-all duration-300 active:scale-95"
-                        aria-label="Buy me a coffee"
+                        className="bg-amber-300 text-slate-800 w-16 h-16 rounded-full border-4 border-slate-800 shadow-[6px_6px_0_#1e293b] active:shadow-none active:translate-x-[6px] active:translate-y-[6px] transition-all flex items-center justify-center text-2xl"
                     >
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M17 8h1a4 4 0 110 8h-1" />
-                            <path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4Z" />
-                            <line x1="6" y1="2" x2="6" y2="4" />
-                            <line x1="10" y1="2" x2="10" y2="4" />
-                            <line x1="14" y1="2" x2="14" y2="4" />
-                        </svg>
+                        ☕
                     </button>
                 </div>
 
                 <div className="relative flex items-center group">
-                    <span className="absolute right-full mr-4 bg-blue-600 text-white text-sm font-bold px-4 py-2 rounded-xl shadow-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 group-hover:-translate-x-1 transition-all duration-300">
-                        Create a Task 📝
+                    <span className="absolute right-full mr-4 bg-white border-2 border-slate-800 text-slate-800 text-lg font-bold px-4 py-2 rounded-md shadow-[4px_4px_0_#1e293b] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all rotate-2">
+                        Draw Note 📝
                     </span>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="bg-gradient-to-br from-blue-500 to-blue-700 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-blue-500/30 hover:scale-105 flex items-center justify-center text-2xl transition-all duration-300 active:scale-95"
+                        className="bg-blue-400 text-slate-800 w-16 h-16 rounded-full border-4 border-slate-800 shadow-[6px_6px_0_#1e293b] active:shadow-none active:translate-x-[6px] active:translate-y-[6px] transition-all flex items-center justify-center text-3xl font-bold"
                     >
-                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                        </svg>
+                        +
                     </button>
                 </div>
             </div>
@@ -325,7 +303,7 @@ function DashboardPage() {
             {/* ── Modals ── */}
             {isModalOpen && (
                 <TodoModal
-                    title="New Task"
+                    title="New Note"
                     todoTitle={newTitle}
                     todoDescription={newDescription}
                     todoPriority={newPriority}
@@ -335,13 +313,13 @@ function DashboardPage() {
                     onPriorityChange={setNewPriority}
                     onSubmit={handleCreate}
                     onClose={() => setIsModalOpen(false)}
-                    submitLabel="Create Todo"
+                    submitLabel="Pin it!"
                 />
             )}
 
             {editingTodo && (
                 <TodoModal
-                    title="Edit Task"
+                    title="Edit Sketch"
                     todoTitle={editTitle}
                     todoDescription={editDescription}
                     todoPriority={editPriority}
@@ -351,7 +329,7 @@ function DashboardPage() {
                     onPriorityChange={setEditPriority}
                     onSubmit={handleEditSave}
                     onClose={() => setEditingTodo(null)}
-                    submitLabel="Save Changes"
+                    submitLabel="Save Edit"
                 />
             )}
         </div>

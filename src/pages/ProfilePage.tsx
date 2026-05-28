@@ -145,31 +145,33 @@ function ProfilePage() {
 
     // ── Render ────────────────────────────────────────────────────────────────
     return (
-        // Added flex flex-col to root
-        <div className="min-h-screen flex flex-col bg-gray-100">
+        // Math Notebook Grid Background + Kalam Font
+        <div className="min-h-screen flex flex-col font-['Kalam',_cursive] text-slate-800 bg-[#fcfbf9] bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] bg-[size:1.5rem_1.5rem]">
 
             <Navbar name={displayName} />
 
-            {/* Added flex-grow w-full pb-16 to push footer down */}
-            <div className={`flex-grow w-full max-w-lg mx-auto mt-10 px-4 pb-16 space-y-6 transition-all duration-200 ${openModal ? "blur-sm pointer-events-none" : ""}`}>
+            <div className={`flex-grow w-full max-w-lg mx-auto mt-10 px-4 pb-16 space-y-6 transition-all duration-300 ${openModal ? "blur-sm pointer-events-none" : ""}`}>
 
-                {/* ── Avatar section ──────────────────────────────────────── */}
-                <div className="bg-white p-6 rounded-2xl shadow-sm flex items-center gap-5">
-                    <div className="relative w-20 h-20 shrink-0">
+                {/* ── Avatar Profile Card (Sketched) ──────────────────────── */}
+                <div className="relative bg-amber-100 p-6 rounded-lg border-4 border-slate-800 shadow-[8px_8px_0_#1e293b] flex items-center gap-6 transform -rotate-1 hover:rotate-0 transition-transform">
+                    {/* Tape holding the profile card */}
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-12 h-6 bg-white/40 border border-slate-800/20 backdrop-blur-sm transform rotate-3 shadow-sm z-10"></div>
+
+                    <div className="relative w-24 h-24 shrink-0">
                         {avatarUrl ? (
                             <img
                                 src={avatarUrl}
                                 alt="Profile"
-                                className="w-20 h-20 rounded-full object-cover border border-gray-200"
+                                className="w-24 h-24 rounded-full object-cover border-4 border-slate-800 shadow-[4px_4px_0_#1e293b]"
                             />
                         ) : (
-                            <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-2xl text-gray-400 select-none border border-gray-300">
+                            <div className="w-24 h-24 rounded-full bg-white flex items-center justify-center text-4xl text-slate-800 font-bold select-none border-4 border-slate-800 shadow-[4px_4px_0_#1e293b]">
                                 {displayName.charAt(0).toUpperCase() || "?"}
                             </div>
                         )}
                         <label
                             htmlFor="avatar-upload"
-                            className="absolute bottom-0 right-0 bg-blue-600 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center cursor-pointer hover:bg-blue-700 shadow-md"
+                            className="absolute bottom-0 right-0 bg-blue-300 text-slate-800 border-2 border-slate-800 text-lg rounded-full w-8 h-8 flex items-center justify-center cursor-pointer hover:bg-blue-400 shadow-[2px_2px_0_#1e293b] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
                             title="Change photo"
                         >
                             ✏️
@@ -183,117 +185,145 @@ function ProfilePage() {
                         />
                     </div>
                     <div>
-                        <p className="text-lg font-semibold text-gray-800">{displayName}</p>
-                        <p className="text-sm text-gray-500">{displayEmail}</p>
+                        <p className="text-3xl font-bold text-slate-900 tracking-wide">{displayName}</p>
+                        <p className="text-lg text-slate-600 font-bold mt-1 bg-white inline-block px-2 border-2 border-slate-800 shadow-[2px_2px_0_#1e293b] rounded-sm transform rotate-1">{displayEmail}</p>
                     </div>
                 </div>
 
                 {/* ── Name row ────────────────────────────────────────────── */}
-                <div className="bg-white p-5 rounded-2xl shadow-sm flex items-center justify-between">
+                <div className="bg-white p-5 rounded-lg border-4 border-slate-800 shadow-[6px_6px_0_#1e293b] flex items-center justify-between transform rotate-1">
                     <div>
-                        <p className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Name</p>
-                        <p className="text-gray-800 font-medium">{displayName}</p>
+                        <p className="text-lg text-slate-500 font-bold mb-0.5">Name Tag</p>
+                        <p className="text-2xl text-slate-900 font-bold">{displayName}</p>
                     </div>
-                    <button onClick={() => openEdit("name")} className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
-                        Edit
+                    <button onClick={() => openEdit("name")} className="px-3 py-1.5 bg-amber-200 border-2 border-slate-800 rounded-md font-bold text-lg shadow-[2px_2px_0_#1e293b] hover:bg-amber-300 active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all">
+                        Edit ✏️
                     </button>
                 </div>
 
                 {/* ── Email row ───────────────────────────────────────────── */}
-                <div className="bg-white p-5 rounded-2xl shadow-sm flex items-center justify-between">
+                <div className="bg-white p-5 rounded-lg border-4 border-slate-800 shadow-[6px_6px_0_#1e293b] flex items-center justify-between transform -rotate-1 mt-6">
                     <div>
-                        <p className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Email</p>
-                        <p className="text-gray-800 font-medium">{displayEmail}</p>
+                        <p className="text-lg text-slate-500 font-bold mb-0.5">Mailbox</p>
+                        <p className="text-2xl text-slate-900 font-bold">{displayEmail}</p>
                     </div>
-                    <button onClick={() => openEdit("email")} className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
-                        Edit
+                    <button onClick={() => openEdit("email")} className="px-3 py-1.5 bg-amber-200 border-2 border-slate-800 rounded-md font-bold text-lg shadow-[2px_2px_0_#1e293b] hover:bg-amber-300 active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all">
+                        Edit ✏️
                     </button>
                 </div>
 
                 {/* ── Password row ─────────────────────────────────────────── */}
-                <div className="bg-white p-5 rounded-2xl shadow-sm flex items-center justify-between">
+                <div className="bg-white p-5 rounded-lg border-4 border-slate-800 shadow-[6px_6px_0_#1e293b] flex items-center justify-between transform rotate-1 mt-6">
                     <div>
-                        <p className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Password</p>
-                        <p className="text-gray-500 tracking-widest">••••••••</p>
+                        <p className="text-lg text-slate-500 font-bold mb-0.5">Secret Key</p>
+                        <p className="text-3xl text-slate-900 tracking-widest mt-1">••••••••</p>
                     </div>
-                    <button onClick={() => openEdit("password")} className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
-                        Edit
+                    <button onClick={() => openEdit("password")} className="px-3 py-1.5 bg-amber-200 border-2 border-slate-800 rounded-md font-bold text-lg shadow-[2px_2px_0_#1e293b] hover:bg-amber-300 active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all">
+                        Edit ✏️
                     </button>
                 </div>
 
                 {/* ── Logout ──────────────────────────────────────────────── */}
-                <div className="bg-white p-5 rounded-2xl shadow-sm">
+                <div className="mt-10">
                     <button
                         onClick={handleLogout}
-                        className="w-full text-red-500 py-2.5 rounded-xl border border-red-200 font-bold hover:bg-red-50 hover:border-red-300 transition-all active:scale-[0.98]"
+                        className="w-full bg-rose-400 text-slate-900 border-4 border-slate-800 py-3 rounded-md text-2xl font-bold hover:bg-rose-500 transition-all shadow-[6px_6px_0_#1e293b] active:shadow-none active:translate-x-[6px] active:translate-y-[6px]"
                     >
-                        Logout
+                        Sign Out 🚪
                     </button>
                 </div>
 
             </div>
 
-            {/* ── Modal overlay ────────────────────────────────────────────── */}
+            <div className="fixed bottom-8 right-8 flex flex-col items-end gap-6 z-30">
+                <div className="relative flex items-center group">
+                    <span className="absolute right-full mr-4 bg-white border-2 border-slate-800 text-slate-800 text-lg font-bold px-4 py-2 rounded-md shadow-[4px_4px_0_#1e293b] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all -rotate-2">
+                        Fuel the dev ☕
+                    </span>
+                    <button
+                        onClick={() => navigate("/buy-me-a-coffee")}
+                        className="bg-amber-300 text-slate-800 w-16 h-16 rounded-full border-4 border-slate-800 shadow-[6px_6px_0_#1e293b] active:shadow-none active:translate-x-[6px] active:translate-y-[6px] transition-all flex items-center justify-center text-2xl"
+                    >
+                        ☕
+                    </button>
+                </div>
+            </div>
+
+            {/* ── Sketched Modal Overlay ────────────────────────────────────────────── */}
             {openModal && (
                 <div
-                    className="fixed inset-0 flex items-center justify-center z-50 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200"
+                    className="fixed inset-0 flex items-center justify-center z-50 bg-slate-900/60 backdrop-blur-sm transition-opacity"
                     onClick={closeModal}
                 >
                     <div
-                        className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-sm mx-4 animate-in zoom-in-95 duration-200"
+                        className="bg-amber-50 rounded-lg w-full max-w-sm mx-4 overflow-hidden border-4 border-slate-800 shadow-[12px_12px_0_#1e293b] transform -rotate-1"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <h3 className="text-xl font-extrabold text-gray-800 mb-6">
-                            {openModal === "name"     && "Update Name"}
-                            {openModal === "email"    && "Update Email"}
-                            {openModal === "password" && "Update Password"}
-                        </h3>
-
-                        {openModal === "password" ? (
-                            <input
-                                type="password"
-                                value={passwordValue}
-                                onChange={(e) => setPasswordValue(e.target.value)}
-                                placeholder="New password (6–32 chars)"
-                                autoFocus
-                                className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 text-gray-800 outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all mb-4"
-                            />
-                        ) : (
-                            <input
-                                type={openModal === "email" ? "email" : "text"}
-                                value={inputValue}
-                                onChange={(e) => setInputValue(e.target.value)}
-                                placeholder={openModal === "email" ? "New email" : "New name"}
-                                autoFocus
-                                className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 text-gray-800 outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all mb-4"
-                            />
-                        )}
-
-                        {modalError && (
-                            <p className="text-red-500 text-sm mb-4 font-medium">{modalError}</p>
-                        )}
-
-                        <div className="flex gap-3 mt-2">
+                        {/* Header */}
+                        <div className="bg-amber-200 border-b-4 border-slate-800 px-6 py-4 flex justify-between items-center">
+                            <h3 className="text-2xl font-bold text-slate-800 tracking-wide">
+                                {openModal === "name"     && "Change Name Tag"}
+                                {openModal === "email"    && "Change Mailbox"}
+                                {openModal === "password" && "New Secret Key"}
+                            </h3>
                             <button
                                 onClick={closeModal}
-                                className="flex-1 py-3 rounded-xl font-semibold border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors"
+                                className="text-slate-800 hover:bg-amber-300 border-4 border-transparent hover:border-slate-800 px-2 py-1 rounded-md transition-all font-bold text-xl"
                             >
-                                Cancel
+                                ❌
                             </button>
-                            <button
-                                onClick={handleModalSubmit}
-                                disabled={loading || (openModal === "password" ? !passwordValue : !inputValue)}
-                                className="flex-1 py-3 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-600/30 disabled:opacity-50 transition-all active:scale-[0.98]"
-                            >
-                                {loading ? "Saving..." : "Save"}
-                            </button>
+                        </div>
+
+                        {/* Body */}
+                        <div className="p-6">
+                            {openModal === "password" ? (
+                                <input
+                                    type="password"
+                                    value={passwordValue}
+                                    onChange={(e) => setPasswordValue(e.target.value)}
+                                    placeholder="New password (6–32 chars)"
+                                    autoFocus
+                                    className="w-full border-4 border-slate-800 bg-white rounded-md px-4 py-3 text-xl text-slate-800 font-bold outline-none focus:bg-amber-100 transition-colors shadow-[inset_4px_4px_0_rgba(0,0,0,0.05)] mb-4"
+                                />
+                            ) : (
+                                <input
+                                    type={openModal === "email" ? "email" : "text"}
+                                    value={inputValue}
+                                    onChange={(e) => setInputValue(e.target.value)}
+                                    placeholder={openModal === "email" ? "New email" : "New name"}
+                                    autoFocus
+                                    className="w-full border-4 border-slate-800 bg-white rounded-md px-4 py-3 text-xl text-slate-800 font-bold outline-none focus:bg-amber-100 transition-colors shadow-[inset_4px_4px_0_rgba(0,0,0,0.05)] mb-4"
+                                />
+                            )}
+
+                            {modalError && (
+                                <p className="text-rose-600 font-bold text-lg mb-4 bg-rose-100 border-2 border-slate-800 inline-block px-3 py-1 shadow-[2px_2px_0_#1e293b]">{modalError}</p>
+                            )}
+
+                            <div className="flex gap-4 mt-4">
+                                <button
+                                    onClick={closeModal}
+                                    className="flex-1 py-3 bg-white border-4 border-slate-800 rounded-md font-bold text-xl shadow-[4px_4px_0_#1e293b] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all hover:bg-slate-100"
+                                >
+                                    Nvm
+                                </button>
+                                <button
+                                    onClick={handleModalSubmit}
+                                    disabled={loading || (openModal === "password" ? !passwordValue : !inputValue)}
+                                    className="flex-1 py-3 bg-blue-400 text-slate-900 border-4 border-slate-800 rounded-md font-bold text-xl hover:bg-blue-500 disabled:opacity-50 transition-all shadow-[4px_4px_0_#1e293b] active:shadow-none active:translate-x-[4px] active:translate-y-[4px]"
+                                >
+                                    {loading ? "Saving..." : "Save It"}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* ── Footer ──────────────────────────────────────────────── */}
-            <Footer />
+            {/* Footer with white background to end the grid nicely */}
+            <div className="flex flex-col justify-start w-full bg-white border-t-4 border-slate-800">
+                <Footer />
+            </div>
         </div>
     );
 }

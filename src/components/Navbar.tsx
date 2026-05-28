@@ -1,11 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 type NavbarProps = {
     name: string;
-}
+};
 
 function Navbar({ name }: NavbarProps) {
     const navigate = useNavigate();
+    const location = useLocation();
 
     function handleLogout() {
         localStorage.clear();
@@ -13,31 +14,47 @@ function Navbar({ name }: NavbarProps) {
     }
 
     return (
-        // sticky + top-0 + z-50 keeps it pinned at the top while scrolling
-        <div className="sticky top-0 z-50 bg-white shadow-sm px-8 py-4 flex justify-between items-center">
-            <button
-                onClick={() => navigate("/dashboard")}
-                className="bg-gray-100 text-gray-700 px-4 py-2 rounded-xl hover:bg-gray-200 text-sm">My Tasks</button>
+        // Added bg-white/70 and backdrop-blur-md for the frosted glass effect
+        <nav className="bg-white/10 backdrop-blur-md border-b-4 border-slate-800 px-6 py-4 flex justify-between items-center sticky top-0 z-40">
+            {/* Left Side */}
+            <div>
+                <button
+                    onClick={() => navigate("/dashboard")}
+                    className={`px-5 py-2 border-4 border-slate-800 rounded-md font-bold text-xl transition-all active:shadow-none active:translate-x-[4px] active:translate-y-[4px] ${
+                        location.pathname === "/dashboard"
+                            ? "bg-amber-200 shadow-[4px_4px_0_#1e293b]"
+                            : "bg-white shadow-[4px_4px_0_#1e293b] hover:bg-slate-100"
+                    }`}
+                >
+                    My Notes 📝
+                </button>
+            </div>
 
-            <div className="flex items-center gap-4">
-                <span className="text-gray-600">Hello, {name} 👋</span>
+            {/* Right Side */}
+            <div className="flex items-center gap-4 sm:gap-6">
+                <span className="text-2xl font-bold text-slate-800 hidden sm:block">
+                    Yo, {name}! ✌️
+                </span>
 
-                {/* Profile button — navigates to /profile */}
                 <button
                     onClick={() => navigate("/profile")}
-                    className="bg-gray-100 text-gray-700 px-4 py-2 rounded-xl hover:bg-gray-200 text-sm"
+                    className={`px-5 py-2 border-4 border-slate-800 rounded-md font-bold text-xl transition-all active:shadow-none active:translate-x-[4px] active:translate-y-[4px] ${
+                        location.pathname === "/profile"
+                            ? "bg-sky-300 shadow-[4px_4px_0_#1e293b] transform rotate-1"
+                            : "bg-white shadow-[4px_4px_0_#1e293b] hover:bg-slate-100 transform -rotate-1"
+                    }`}
                 >
                     Profile
                 </button>
 
                 <button
                     onClick={handleLogout}
-                    className="bg-red-500 text-white px-4 py-2 rounded-xl hover:bg-red-600 text-sm"
+                    className="px-5 py-2 bg-rose-400 border-4 border-slate-800 rounded-md font-bold text-xl shadow-[4px_4px_0_#1e293b] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all hover:bg-rose-500 transform rotate-1"
                 >
                     Logout
                 </button>
             </div>
-        </div>
+        </nav>
     );
 }
 
