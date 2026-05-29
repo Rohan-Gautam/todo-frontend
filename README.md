@@ -27,7 +27,7 @@
 ## Profile
 ![TaskSketch Profile](./public/profile.png)
 ## Buy-me-a-coffee
-![TaskSketch Buy-me-a-coffee](./public/profile.png)
+![TaskSketch Buy-me-a-coffee](./public/buymeacoffee.png)
 ---
 
 ## ✨ Features
