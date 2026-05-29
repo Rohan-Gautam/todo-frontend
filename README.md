@@ -6,12 +6,28 @@
 ![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer&logoColor=blue)
+![Razorpay](https://img.shields.io/badge/Razorpay-02042B?style=for-the-badge&logo=razorpay&logoColor=3395FF)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![JSON Web Tokens](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=563D7C)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=spring-security&logoColor=white)
+
 
 **TaskSketch** is a full-stack, beautifully hand-drawn to-do and productivity application. Moving away from sterile corporate UI, TaskSketch features a highly interactive "Sketchbook Cafe" aesthetic, complete with math-grid notebook pages, masking tape UI elements, brutalist marker borders, and floating 3D parallax elements.
 
 🔗 **Live Application:** [https://tasksketch.rohangautam.app/](https://tasksketch.rohangautam.app/)
-
-*(Note: Add a screenshot or GIF of your beautiful UI here!)*
+## Home
+![TaskSketch Home](./public/home.png)
+## Dashboard
+![TaskSketch Dashboard](./public/dashboard.png)
+## Profile
+![TaskSketch Profile](./public/profile.png)
+## Buy-me-a-coffee
+![TaskSketch Buy-me-a-coffee](./public/profile.png)
 ---
 
 ## ✨ Features
