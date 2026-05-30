@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
                     {/* Left: Branding & Copyright */}
                     <div className="flex flex-col items-center md:items-start transform -rotate-1">
                         <span className="text-3xl font-extrabold text-slate-800 tracking-wide underline decoration-wavy decoration-blue-400 decoration-2 underline-offset-4">
-                            TaskMaster
+                            TaskSketch
                         </span>
                         <p className="text-lg text-slate-600 mt-2 font-bold">
                             © {currentYear} All rights reserved.

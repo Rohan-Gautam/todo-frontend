@@ -19,7 +19,7 @@ function HomePage() {
 
                     {/* Sketched Title */}
                     <h1 className="text-5xl sm:text-7xl font-bold text-slate-800 mb-6 tracking-wide underline decoration-wavy decoration-blue-400 decoration-4 underline-offset-8">
-                        TaskMaster 📓
+                        TaskSketch 📓
                     </h1>
 
                     <p className="text-2xl text-slate-600 mb-10 font-bold max-w-lg mx-auto leading-relaxed">
